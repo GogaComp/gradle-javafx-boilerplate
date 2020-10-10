@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+mainClassName = 'sample.Launcher'
+
+repositories {
+    mavenCentral()
+}
+javafx {
+    version = "14"
+    modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.fxml' ]
+}
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
